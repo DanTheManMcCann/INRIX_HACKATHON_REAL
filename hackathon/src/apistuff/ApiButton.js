@@ -1,5 +1,4 @@
 import React from 'react';
-import { AST_SymbolExport } from 'terser';
 //This is API Folder
 
 async function tokenrequest(){
@@ -20,6 +19,20 @@ async function geoCode(addressGiven){
     }
 }
 
+async function googleDir(destination, origin){
+    const response= await fetch("https://maps.googleapis.com/maps/api/directions/json?destination=place_id:"+ destination +"&origin=place_id:"+ origin + "&mode=transit&key=AIzaSyCrxWO6tk28BtEckg7dG9XwvBpwWliynsU");
+    const json = await response.json();
+    console.log(json.result);
+    return json;
+}
+
+async function onStreet(lat,lng, token){
+    const response= await fetch("https://api.iq.inrix.com/blocks/v3?point=" + lat + "%7C" + lng + "&radius=100&accessToken="+token);
+    const json = await response.json();
+    console.log(json.result);
+    return json;
+}
+
 
 function ApiButton() {
     const [input, setInput] = React.useState('');
@@ -33,15 +46,20 @@ function ApiButton() {
         const token1= await tokenrequest(); //have to use a fuckton of awaits
         // console.log(token1);
     
-        const address = await geoCode(addressGiven);
-        const addressbrokendown=address.results['0'].geometry.location;
-        console.log(addressbrokendown.lat);
-        console.log(addressbrokendown.lng);
+        // const address = await geoCode(addressGiven);
+        // const addressbrokendown=address.results['0'].geometry.location;
+        // console.log(addressbrokendown.lat);
+        // console.log(addressbrokendown.lng);
 
-        const address2 = await geoCode(addressGivenTwo);
-        const address2brokendown=address2.results['0'].geometry.location;
-        console.log(address2brokendown.lat);
-        console.log(address2brokendown.lng);
+        // const address2 = await geoCode(addressGivenTwo);
+        // const address2brokendown=address2.results['0'].geometry.location;
+        // console.log(address2brokendown.lat);
+        // console.log(address2brokendown.lng);
+
+        // const parking = await onStreet(address2brokendown.lat, address2brokendown.lng, token1);
+
+        const transitDir = await googleDir("ChIJIQBpAG2ahYAR_6128GcTUEo", "ChIJk8EIXIG3j4ARwL_Ao3ykdeQ");
+        console.log(transitDir);
     
     }   
 
