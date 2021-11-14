@@ -44,21 +44,22 @@ function ApiButton() {
 
         //get api token for inrix
         const token1= await tokenrequest(); //have to use a fuckton of awaits
-        // console.log(token1);
+        console.log(token1);
     
-        // const address = await geoCode(addressGiven);
-        // const addressbrokendown=address.results['0'].geometry.location;
-        // console.log(addressbrokendown.lat);
-        // console.log(addressbrokendown.lng);
+        const address = await geoCode(addressGiven);
+        const addressbrokendown=address.results['0'].geometry.location;
+        console.log(addressbrokendown.lat);
+        console.log(addressbrokendown.lng);
 
-        // const address2 = await geoCode(addressGivenTwo);
-        // const address2brokendown=address2.results['0'].geometry.location;
-        // console.log(address2brokendown.lat);
-        // console.log(address2brokendown.lng);
+        const address2 = await geoCode(addressGivenTwo);
+        const address2brokendown=address2.results['0'].geometry.location;
+        console.log(address2brokendown.lat);
+        console.log(address2brokendown.lng);
 
-        // const parking = await onStreet(address2brokendown.lat, address2brokendown.lng, token1);
+        const parking = await onStreet(address2brokendown.lat, address2brokendown.lng, token1);
 
         const transitDir = await googleDir("ChIJIQBpAG2ahYAR_6128GcTUEo", "ChIJk8EIXIG3j4ARwL_Ao3ykdeQ");
+        console.log("transit");
         console.log(transitDir);
     
     }   
