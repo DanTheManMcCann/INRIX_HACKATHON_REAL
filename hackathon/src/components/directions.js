@@ -9,6 +9,8 @@ import {
   Circle,
 } from "@react-google-maps/api";
 
+let costofTrip=1;
+
 //define api function
 async function tokenrequest() {
   const response = await fetch(
@@ -145,7 +147,7 @@ function MyComponent() {
   const [routeDist, setRdist] = React.useState('');
   const [routeTravelTime, setRTT] = React.useState('');
   const [routeSummary, setRSUM] = React.useState('');
-
+  const [cosrPerHourPARK, setCPHP] = React.useState('');
 
   const handleInput1 = (e) => {
     setValue1(e.target.value);
@@ -171,20 +173,22 @@ function MyComponent() {
     const addressbrokendown = address.results["0"].geometry.location;
     console.log(addressbrokendown.lat);
     console.log(addressbrokendown.lng);
+    const place1 = address.results["0"].place_id;
 
     const address2 = await geoCode(value2);
     const address2brokendown = address2.results["0"].geometry.location;
     console.log(address2brokendown.lat);
     console.log(address2brokendown.lng);
+    const place2 = address2.results["0"].place_id;
 
-    const parking = await onStreet(
+    /*const parking = await onStreet(
       address2brokendown.lat,
-      address2brokendown.lng,
+      address2brokendown.lng=,
       token1
-    );
+    );*/
     const transitDir = await googleDir(
-      "ChIJs62M-xukj4ARHw5rfMCOzpQ",
-      "ChIJd_S-m6QyjoARhaOxXL3rZUU"
+      place2,
+      place1
     );
     console.log("transit");
     console.log(transitDir);
@@ -226,7 +230,7 @@ function MyComponent() {
 
     //INRIX API request to find a route from destination to origin
     const route = await findRoute(addressOrigGeoLoc, addressDestGeoLoc, token1);
-    //console.log(route);
+    console.log('Route:' + route);
     let routeID = route.result.trip.tripId;
 
     //API request for route info
@@ -324,12 +328,12 @@ function MyComponent() {
     const lotParking = await fetchLotParking(addressDestGeoLoc, radius, token1);
     //console.log(lotParking);
 
-    console.log(rInfo.result.trip.routes[0]);
-
+    costofTrip = .76 * rInfo.result.trip.routes[0].totalDistance
     //set variables to new variables to plot on graph
     setRdist(rInfo.result.trip.routes[0].totalDistance);
     setRTT(rInfo.result.trip.routes[0].travelTimeMinutes);
     setRSUM(rInfo.result.trip.routes[0].summary.text);
+    setCPHP(parkingAvgCost);
     setDestination(value1);
     setOrigin(value2);
   }
@@ -398,13 +402,19 @@ function MyComponent() {
           )}
         </GoogleMap>
       </LoadScript>
-      {cost && <p>Cost :{cost}</p>}
-      {distance && <p>Distance :{distance}</p>}
-      {timeDaniel && <p>Time :{timeDaniel}</p>}
+      <header style={{marginTop:"20px"}}>Results:</header>
+      <p>Public Transportation: </p>
+      {cost && <p>Cost :${cost} </p>}
+      {distance && <p>Distance :{distance} miles</p>}
+      {timeDaniel && <p>Time :{timeDaniel} minutes</p>}
+      <p>Personal Transportation: </p>
+      {routeDist&& <p>Distance :{routeDist} miles</p>}
+      {routeTravelTime&& <p>Time:{routeTravelTime}minutes </p>}
+      {routeSummary&& <p>Cost of driving:${costofTrip.toFixed(2)} (.76 c/m according AAA)</p>}
+      {cosrPerHourPARK&& <p>car Average Cost Per Hour for street parking near dest :{cosrPerHourPARK}</p>}
 
-      {routeDist&& <p>car total distance :{routeDist}</p>}
-      {routeTravelTime&& <p>car total time:{routeTravelTime}</p>}
-      {routeSummary&& <p>car summary :{routeSummary}</p>}
+
+      
     </>
   );
 }

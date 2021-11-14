@@ -64,20 +64,20 @@ function Partners() {
           <a href="https://inrix.com/">
             <div className="card-two">
             <img src={inrix} />
-            <div>INRIX - Our main (and most important) partner! </div>
+            <div style={{padding: "10 10 10 10"}}>INRIX - Our main (and most important) partner! </div>
             </div>
           </a>
           <a href="https://reactjs.org">
           <div className="card-two" id="card-special">
             <img src={reactimg} />
-            <div>React JS - Main platform used for this project</div>
+            <div style={{padding: "10 10 10 10"}} >React JS - Main platform used for this project</div>
           </div>
           </a>
           
           <a href="https://cloud.google.com/apis/docs/overview">
           <div className="card-two">
             <img src={googlelogo} />
-            <div>Google API - Used for visualizing routes & parking on a map</div>
+            <div style={{padding: "10 10 10 10"}} >Google API - Used for visualizing routes & parking on a map</div>
           </div>
           </a>
         </div>

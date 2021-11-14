@@ -20,7 +20,6 @@ function App() {
     <div className="App">
     <NavigationBar></NavigationBar>
     <p> Calculate Public Transportation</p>
-      {/* <ApiButton></ApiButton> */}
       <MyComponent></MyComponent>
     <Statistics></Statistics>
     <Purpose></Purpose>
