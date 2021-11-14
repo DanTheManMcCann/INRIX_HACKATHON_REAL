@@ -7,6 +7,8 @@ import GoogleMapTwo from './apistuff/googlemaps';
 
 import MyComponent from './components/directions';
 import { LoadScript } from '@react-google-maps/api';
+import NavigationBar from './components/navigationbar';
+import { Statistics, Purpose, AboutUs, Partners } from './components/restofthepage';
 
 function handleClick(){
   console.log("ahh");
@@ -16,10 +18,14 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={handleClick}>Hello </button>
-      <p>TEst</p>
-      <ApiButton></ApiButton>
-      {/* <MyComponent></MyComponent> */}
+    <NavigationBar></NavigationBar>
+    <p> Calculate Public Transportation</p>
+      {/* <ApiButton></ApiButton> */}
+      <MyComponent></MyComponent>
+    <Statistics></Statistics>
+    <Purpose></Purpose>
+    <AboutUs></AboutUs>
+    <Partners></Partners>
     </div>
   );
 

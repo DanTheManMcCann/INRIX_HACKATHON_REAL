@@ -58,10 +58,28 @@ function ApiButton() {
 
         const parking = await onStreet(address2brokendown.lat, address2brokendown.lng, token1);
 
-        const transitDir = await googleDir("ChIJIQBpAG2ahYAR_6128GcTUEo", "ChIJk8EIXIG3j4ARwL_Ao3ykdeQ");
+        const transitDir = await googleDir("ChIJs62M-xukj4ARHw5rfMCOzpQ", "ChIJd_S-m6QyjoARhaOxXL3rZUU");
         console.log("transit");
         console.log(transitDir);
-    
+        const parsedtransit=transitDir.routes['0'];
+        console.log(parseFloat(parsedtransit.fare.text.substring(1)));
+        const pt=parsedtransit.legs['0'].distance.text
+        console.log(parseFloat(pt.substring(0, pt.indexOf(' '))));
+
+        const pt2=parsedtransit.legs['0'].duration.text.split(' '); // all this code is used for converting from written date to numbers
+        let i, count=0;
+        for (i=0;i<pt2.length;i+=2){//incrememnt by two
+            if (pt2[i+1]=='day'){
+                count += parseInt(pt2[i])*1440;
+            }
+            else if (pt[i+1]=='hour' && pt[i+1]=='hours'){
+                count += parseInt(pt2[i])*60;
+            }
+            else{
+                count+= parseInt(pt2[i]);
+            }
+        }
+        console.log(count);
     }   
 
   return (
